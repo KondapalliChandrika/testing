@@ -2,9 +2,7 @@ name: Android APK Build
 
 on:
   push:
-    branches:
-      - main
-      - master
+    branches: [ main, master ]
   pull_request:
 
 jobs:
@@ -20,20 +18,22 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install Node dependencies
-        run: npm install
+      - name: Install Node modules
+        run: |
+          npm install
+          npm install --prefix android  # sometimes needed for RN Gradle plugin
 
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
           distribution: "temurin"
-          java-version: "17"
+          java-version: 17
 
       - name: Make gradlew executable
         run: cd android && chmod +x gradlew
 
       - name: Build Debug APK
-        run: cd android && ./gradlew assembleDebug
+        run: cd android && ./gradlew assembleDebug --stacktrace
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
