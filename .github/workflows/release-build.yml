@@ -15,21 +15,26 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install Node dependencies
+        run: npm install
+
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
           distribution: "temurin"
           java-version: "17"
 
-      # Go into android folder and give access to gradlew
       - name: Make gradlew executable
         run: cd android && chmod +x gradlew
 
-      # Build debug APK inside android folder
       - name: Build Debug APK
         run: cd android && ./gradlew assembleDebug
 
-      # Upload APK artifact from the correct path
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
