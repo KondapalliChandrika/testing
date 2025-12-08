@@ -19,9 +19,7 @@ jobs:
           node-version: 18
 
       - name: Install Node modules
-        run: |
-          npm install
-          npm install --prefix android  # sometimes needed for RN Gradle plugin
+        run: npm install
 
       - name: Set up JDK
         uses: actions/setup-java@v4
