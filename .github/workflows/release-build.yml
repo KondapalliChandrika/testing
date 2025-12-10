@@ -15,15 +15,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Node (required for npx / autolinking)
+      - name: Set up Node
         uses: actions/setup-node@v3
         with:
-          node-version: "18"    # or the node version your project uses
+          node-version: "18"
 
       - name: Install Node dependencies
-        # Use npm ci for reproducible installs (or `yarn install` if you use yarn)
         run: npm ci
-        # If you use yarn, replace with: run: yarn install --frozen-lockfile
 
       - name: Cache Gradle
         uses: actions/cache@v4
@@ -45,11 +43,10 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build Debug APK
-        # Running gradle after node modules are present allows RN autolinking to work
         run: ./gradlew assembleDebug --no-daemon
 
-      - name: Upload APK Artifact
-        uses: actions/upload-artifact@v3
+      - name: Upload APK Artifact ✅ FIXED
+        uses: actions/upload-artifact@v4
         with:
           name: app-debug
           path: app/build/outputs/apk/debug/*.apk
