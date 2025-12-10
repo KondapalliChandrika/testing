@@ -51,7 +51,6 @@ android {
 
 dependencies {
     implementation("com.facebook.react:react-android")
-implementation project(':react-native-orientation-locker')
 
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
